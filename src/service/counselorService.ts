@@ -127,12 +127,13 @@ class CounselorService {
     try {
       const counselor = await Counselor.findById(input.id);
       if (!counselor) throw new NotFoundError("Data konselor tidak ditemukan.");
-      const isPasswordValid = bcrypt.compare(
+      const isPasswordValid = await bcrypt.compare(
         input.oldPassword,
         counselor.password
       );
       if (!isPasswordValid) throw new Error("Password lama salah.");
       counselor.password = input.newPassword;
+      await counselor.save();
       return true;
     } catch (error) {
       throw error;
@@ -145,6 +146,24 @@ class CounselorService {
       if (!counselor) throw new NotFoundError("Data konselor tidak ditemukan.");
       counselor.accessToken = undefined;
       await counselor.save();
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  public updatePassword = async (
+    id: string,
+    hashedPassword: string
+  ): Promise<boolean> => {
+    try {
+      // Use findByIdAndUpdate to bypass pre-save hook (password already hashed)
+      const counselor = await Counselor.findByIdAndUpdate(
+        id,
+        { password: hashedPassword },
+        { new: true }
+      );
+      if (!counselor) throw new NotFoundError("Data konselor tidak ditemukan.");
       return true;
     } catch (error) {
       throw error;

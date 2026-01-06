@@ -10,6 +10,8 @@ import {
   IGetCurrentUserInput,
   IJWTPayload,
   ILogoutInput,
+  IForgotPasswordInput,
+  IResetPasswordInput,
 } from "../types/auth.type";
 import {
   ICounselorDocument,
@@ -192,6 +194,69 @@ class AuthController {
       }
     },
   ];
+
+  public forgotPassword = async (
+    req: Request,
+    res: Response
+  ): Promise<void> => {
+    try {
+      const input: IForgotPasswordInput = req.body as IForgotPasswordInput;
+
+      if (!input.email || !input.role) {
+        res.status(400).json({
+          success: false,
+          message: "Email dan role diperlukan.",
+        });
+        return;
+      }
+
+      const result = await authService.forgotPassword(input);
+      res
+        .status(200)
+        .json(responseSuccessWithData(200, result, result.message));
+      return;
+    } catch (error) {
+      await identifyError(res, error);
+      return;
+    }
+  };
+
+  public resetPassword = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const input: IResetPasswordInput = req.body as IResetPasswordInput;
+
+      if (!input.token || !input.newPassword) {
+        res.status(400).json({
+          success: false,
+          message: "Token dan password baru diperlukan.",
+        });
+        return;
+      }
+
+      if (input.newPassword.length < 8) {
+        res.status(400).json({
+          success: false,
+          message: "Password minimal 8 karakter.",
+        });
+        return;
+      }
+
+      const result = await authService.resetPassword(input);
+      res
+        .status(200)
+        .json(
+          responseSuccessWithoutData(
+            200,
+            result,
+            "Password berhasil direset. Silakan login dengan password baru."
+          )
+        );
+      return;
+    } catch (error) {
+      await identifyError(res, error);
+      return;
+    }
+  };
 }
 
 export default new AuthController();

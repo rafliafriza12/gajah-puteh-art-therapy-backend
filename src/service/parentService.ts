@@ -82,12 +82,13 @@ class ParentService {
     try {
       const parent = await Parent.findById(input.id);
       if (!parent) throw new NotFoundError("Data orang tua tidak ditemukan.");
-      const isPasswordValid = bcrypt.compare(
+      const isPasswordValid = await bcrypt.compare(
         input.oldPassword,
         parent.password
       );
       if (!isPasswordValid) throw new Error("Password lama salah.");
       parent.password = input.newPassword;
+      await parent.save();
       return true;
     } catch (error) {
       throw error;
@@ -100,6 +101,24 @@ class ParentService {
       if (!parent) throw new NotFoundError("Data orang tua tidak ditemukan.");
       parent.accessToken = undefined;
       await parent.save();
+      return true;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  public updatePassword = async (
+    id: string,
+    hashedPassword: string
+  ): Promise<boolean> => {
+    try {
+      // Use findByIdAndUpdate to bypass pre-save hook (password already hashed)
+      const parent = await Parent.findByIdAndUpdate(
+        id,
+        { password: hashedPassword },
+        { new: true }
+      );
+      if (!parent) throw new NotFoundError("Data orang tua tidak ditemukan.");
       return true;
     } catch (error) {
       throw error;
