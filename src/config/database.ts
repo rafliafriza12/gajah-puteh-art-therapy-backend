@@ -61,7 +61,11 @@ const connectDB = async (): Promise<void> => {
       console.error("Error details:", error.message);
     }
 
-    process.exit(1);
+    // Don't exit in serverless environment
+    if (process.env.NODE_ENV !== "production") {
+      process.exit(1);
+    }
+    throw error;
   }
 };
 
