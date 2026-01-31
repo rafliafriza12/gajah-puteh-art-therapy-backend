@@ -7,7 +7,7 @@ class Screening {
   constructor() {
     this.screening = mongoose.model<IScreeningDocument>(
       "Screening",
-      this.initialSchema()
+      this.initialSchema(),
     );
   }
 
@@ -19,55 +19,22 @@ class Screening {
           ref: "Therapy",
           required: [true, "ID terapi diperlukan."],
         },
-        depressionScore: {
+        screeningScore: {
           type: Number,
-          required: [true, "Skor depresi diperlukan"],
-          min: [0, "Skor depresi tidak boleh negatif."],
+          required: [true, "Skor screening diperlukan"],
+          min: [0, "Skor screening tidak boleh kurang dari 0."],
+          max: [10, "Skor sceening tidak boleh lebih dari 10"],
         },
-        depressionInterpretation: {
+        counselorInterpretation: {
           type: String,
-          required: [true, "Interpretasi skor depresi diperlukan"],
-          trim: true,
-          minlength: [10, "Interpretasi skor depresi minimal 10 karakter."],
+          required: [true, "Interpretasi screening untuk konselor diperlukan"],
         },
-        anxietyScore: {
-          type: Number,
-          required: [true, "Skor kecemasan diperlukan."],
-          min: [0, "Skor kecemasan tidak boleh negatif"],
-        },
-        anxietyInterpretation: {
+        parentInterpretation: {
           type: String,
-          required: [true, "Interpretasi skor kecemasan diperlukan"],
-          trim: true,
-          minlength: [10, "Interpretasi skor kecemasan minimal 10 karakter."],
-        },
-        stressScore: {
-          type: Number,
-          required: [true, "Skor stres diperlukan"],
-          min: [0, "Skor stress tidak boleh negatif."],
-        },
-        stressInterpretation: {
-          type: String,
-          required: [true, "Interpretasi skor stres diperlukan."],
-          trim: true,
-          minlength: [10, "Interpretasi skor stres minimal 10 karakter."],
-        },
-        totalScreeningScore: {
-          type: Number,
-          required: [true, "Skor total screening diperlukan."],
-          min: [0, "Skor total screening tidak boleh negatif."],
-        },
-        totalScreeningInterpretation: {
-          type: String,
-          required: [true, "Kesimpulan keseluruhan screening diperlukan"],
-          trim: true,
-          minlength: [
-            10,
-            "Kesimpulan keseluruhan screening minimal 10 karakter.",
-          ],
+          required: [true, "Interpretasi screening untuk orangtua diperlukan."],
         },
       },
-      { timestamps: true }
+      { timestamps: true },
     );
   };
 

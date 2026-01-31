@@ -26,8 +26,8 @@ class ScreeningController {
             responseSuccessWithData(
               201,
               result,
-              "Data screening berhasil ditambahkan."
-            )
+              "Data screening berhasil ditambahkan.",
+            ),
           );
         return;
       } catch (error) {
@@ -50,8 +50,8 @@ class ScreeningController {
             responseSuccessWithData(
               200,
               result,
-              "Data screening berhasil diambil"
-            )
+              "Data screening berhasil diambil",
+            ),
           );
         return;
       } catch (error) {
@@ -76,8 +76,8 @@ class ScreeningController {
             responseSuccessWithData(
               200,
               result,
-              "Data screening berhasil diambil"
-            )
+              "Data screening berhasil diambil",
+            ),
           );
         return;
       } catch (error) {
@@ -102,8 +102,8 @@ class ScreeningController {
             responseSuccessWithData(
               200,
               result,
-              "Data screening berhasil diupdate."
-            )
+              "Data screening berhasil diupdate.",
+            ),
           );
         return;
       } catch (error) {
@@ -127,8 +127,8 @@ class ScreeningController {
             responseSuccessWithoutData(
               200,
               result,
-              "Screening berhasil dihapus."
-            )
+              "Screening berhasil dihapus.",
+            ),
           );
         return;
       } catch (error) {
