@@ -7,7 +7,7 @@ class Observation {
   constructor() {
     this.observation = mongoose.model<IObservationDocument>(
       "Observation",
-      this.initialSchema()
+      this.initialSchema(),
     );
   }
 
@@ -37,24 +37,6 @@ class Observation {
           trim: true,
           minlength: [10, "Laporan observasi sesi tiga minimal 10 karakter."],
         },
-        sessionFour: {
-          type: String,
-          required: [true, "Laporan observasi sesi empat diperlukan."],
-          trim: true,
-          minlength: [10, "Laporan observasi sesi empat minimal 10 karakter."],
-        },
-        sessionFive: {
-          type: String,
-          required: [true, "Laporan observasi sesi lima diperlukan."],
-          trim: true,
-          minlength: [10, "Laporan observasi sesi lima minimal 10 karakter."],
-        },
-        sessionSix: {
-          type: String,
-          required: [true, "Laporan observasi sesi enam diperlukan."],
-          trim: true,
-          minlength: [10, "Laporan observasi sesi enam minimal 10 karakter."],
-        },
         summary: {
           type: String,
           required: [true, "Kesimpulan observasi seluruh sesi diperlukan."],
@@ -65,7 +47,7 @@ class Observation {
           ],
         },
       },
-      { timestamps: true }
+      { timestamps: true },
     );
   };
 

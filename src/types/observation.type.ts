@@ -5,9 +5,6 @@ export interface IObservation {
   sessionOne: string;
   sessionTwo: string;
   sessionThree: string;
-  sessionFour: string;
-  sessionFive: string;
-  sessionSix: string;
   summary: string;
   createdAt: Date;
   updatedAt: Date;
